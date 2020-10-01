@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "897268579346",
+    "firebase_url": "https://calstatelaacm-portal.firebaseio.com",
+    "project_id": "calstatelaacm-portal",
+    "storage_bucket": "calstatelaacm-portal.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:897268579346:android:6e9885e5baf7c3bdaaaccb",
+        "android_client_info": {
+          "package_name": "com.example.acm_web"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "897268579346-mvpgvku6bdsi4bdguhpc7lqtufpgooq9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.acm_web",
+            "certificate_hash": "992a8350e68c4697c546fa9f6838b8e5f24f6875"
+          }
+        },
+        {
+          "client_id": "897268579346-1aqr1vf0eakmacm24e8f163md904559d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSvDVoiC_zjJkKnWEqAFABz5d4f7KiG-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "897268579346-1aqr1vf0eakmacm24e8f163md904559d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
