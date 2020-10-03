@@ -1,14 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
 
-class LeadershipBoard extends StatefulWidget {
-  @override
-  _LeadershipBoardState createState() => _LeadershipBoardState();
-}
-
-class _LeadershipBoardState extends State<LeadershipBoard> {
+class LeadershipBoard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(UniversalPlatform.isAndroid || MediaQuery.of(context).size.width < 600){
@@ -17,7 +13,6 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
     return webDisplay();
   }
 
-  //Mobile screen
   Widget mobileDisplay(){
     return SafeArea(
       child: Scaffold(
@@ -64,7 +59,7 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset('assets/acmlogo1.png'),
+          title: Image.asset('assets/acmlogo1.png', width: 100),
           actions: [
             FlatButton(
                 onPressed: (){},
@@ -88,11 +83,34 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
         ),
         body: Row(
           children: [
-            Container(
-              height: 200,
-              color: Colors.white,
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.only(left: 50, right: 50),
+                child: ExpansionCard(
+                  title: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          "User Name",
+                        ),
+                        Text(
+                          "User Email",
+                        ),
+                      ],
+                    ),
+                  ),
+                  children: <Widget>[
+                    Text("Membership Status: Valid", style: GoogleFonts.openSans(),),
+                    RaisedButton(
+                      onPressed: (){},
+                      child: Text("Log out"),
+                    )
+                  ],
+                ),
+              ),
             ),
-            retriveLeadershipBoard()
+            Expanded(child: retriveLeadershipBoard())
           ],
         ),
       ),
