@@ -1,6 +1,6 @@
 # acm_web
 
-A new Flutter project.
+ACM Cal State LA Portal
 
 ## Getting Started
 
