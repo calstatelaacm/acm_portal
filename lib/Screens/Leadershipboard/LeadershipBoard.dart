@@ -66,7 +66,7 @@ class LeadershipBoard extends StatelessWidget {
                 child: Row(
                   children: [
                     Icon(Icons.calendar_today),
-                    Text("Events")
+                    Text(" Events", style: GoogleFonts.roboto(),)
                   ],
                 )
             ),
@@ -74,8 +74,8 @@ class LeadershipBoard extends StatelessWidget {
                 onPressed: (){},
                 child: Row(
                   children: [
-                    Icon(Icons.leaderboard),
-                    Text("Leadership Board")
+                    Icon(Icons.leaderboard,),
+                    Text(" Leadership Board", style: GoogleFonts.roboto(),)
                   ],
                 )
             )
