@@ -1,5 +1,4 @@
 import 'dart:html';
-
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:acm_web/Screens/Leadershipboard/Leadership.dart';
@@ -28,10 +27,10 @@ class _LoginState extends State<Login> {
   Widget loginForm(){
     return Container(
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/sideshow1.png'),
-          fit: BoxFit.cover
-        )
+          image: DecorationImage(
+              image: AssetImage('assets/sideshow1.png'),
+              fit: BoxFit.cover
+          )
       ),
       child: Center(
         child: ListView(
@@ -68,9 +67,9 @@ class _LoginState extends State<Login> {
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                   Radius.circular(5)),
-                            borderSide: BorderSide(
-                              color: Colors.white
-                            )
+                              borderSide: BorderSide(
+                                  color: Colors.white
+                              )
                           )
 
                       ),
@@ -125,7 +124,7 @@ class _LoginState extends State<Login> {
                           .push(new MaterialPageRoute(builder: (context) => CreateAccount()));
                     },
                     child: Text("New? Create Account", textAlign: TextAlign.center,
-                    style: GoogleFonts.openSans(fontSize: 20),),
+                      style: GoogleFonts.openSans(fontSize: 20),),
                   )
                 ],
               ),
