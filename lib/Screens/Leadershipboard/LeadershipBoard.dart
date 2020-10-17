@@ -1,10 +1,17 @@
+import 'package:acm_web/Authentication/UserCard.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class LeadershipBoard extends StatelessWidget {
+class LeadershipBoard extends StatefulWidget {
+  @override
+  _LeadershipBoardState createState() => _LeadershipBoardState();
+}
+
+class _LeadershipBoardState extends State<LeadershipBoard> {
   @override
   Widget build(BuildContext context) {
     if(UniversalPlatform.isAndroid || MediaQuery.of(context).size.width < 600){
@@ -84,31 +91,7 @@ class LeadershipBoard extends StatelessWidget {
         body: Row(
           children: [
             Expanded(
-              child: Container(
-                padding: EdgeInsets.only(left: 50, right: 50),
-                child: ExpansionCard(
-                  title: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "User Name",
-                        ),
-                        Text(
-                          "User Email",
-                        ),
-                      ],
-                    ),
-                  ),
-                  children: <Widget>[
-                    Text("Membership Status: Valid", style: GoogleFonts.openSans(),),
-                    RaisedButton(
-                      onPressed: (){},
-                      child: Text("Log out"),
-                    )
-                  ],
-                ),
-              ),
+              child: UserCard(),
             ),
             Expanded(child: retriveLeadershipBoard())
           ],
@@ -119,7 +102,8 @@ class LeadershipBoard extends StatelessWidget {
 
   Widget retriveLeadershipBoard(){
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection("leadershipBoard").orderBy("points", descending: true).snapshots(),
+      stream: FirebaseFirestore.instance.collection("users").orderBy("points", descending: true)
+          .limit(10).snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
         if(!snapshot.hasData){
           return Center(
