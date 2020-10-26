@@ -1,5 +1,7 @@
 import 'package:acm_web/Authentication/UserCard.dart';
+import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:expansion_card/expansion_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -30,9 +32,15 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
           child: ListView(
             children: [
               ListTile(
+                onTap: (){
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+                },
                 title: Text("Events"),
               ),
               ListTile(
+                onTap: (){
+                  Navigator.pop(context);
+                },
                 title: Text("Leadership Board"),
               ),
               Divider(
@@ -69,7 +77,9 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
           title: Image.asset('assets/acmlogo1.png', width: 100),
           actions: [
             FlatButton(
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+                },
                 child: Row(
                   children: [
                     Icon(Icons.calendar_today),
@@ -78,7 +88,7 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
                 )
             ),
             FlatButton(
-                onPressed: (){},
+                onPressed: null,
                 child: Row(
                   children: [
                     Icon(Icons.leaderboard,),

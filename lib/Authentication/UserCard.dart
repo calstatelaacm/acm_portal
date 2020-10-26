@@ -22,6 +22,13 @@ class _UserCardState extends State<UserCard> {
   }
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    retrieveUid();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return StreamBuilder(
       stream: FirebaseFirestore.instance.collection("users")

@@ -1,6 +1,12 @@
+import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
+import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
+import 'package:acm_web/Screens/SplashScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+
+import 'Screens/Events/Events.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,7 +39,26 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      home: Login(),
+      home: _getLandingPage()
+    );
+  }
+
+  Widget _getLandingPage() {
+    return StreamBuilder<User>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, snapshot) {
+        if (snapshot.hasData) {
+          if (snapshot.data.providerData.length == 1) {
+            // logged in using email and password
+            return Events();
+          } else {
+            // don't remove this
+            return Events();
+          }
+        } else {
+          return Login();
+        }
+      },
     );
   }
 }
