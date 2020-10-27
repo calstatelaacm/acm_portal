@@ -1,9 +1,11 @@
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
+import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
 
 class Events extends StatefulWidget {
+  static const String route = '/events';
   @override
   _EventsState createState() => _EventsState();
 }
@@ -85,7 +87,7 @@ class _EventsState extends State<Events> {
             FlatButton(
                 onPressed: (){
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+                  Navigator.of(context).pushReplacementNamed('/leadershipBoard');
                 },
                 child: Row(
                   children: [
@@ -96,8 +98,7 @@ class _EventsState extends State<Events> {
             ),
             FlatButton(
                 onPressed: (){
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                  // Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+                  Navigator.of(context).pushNamed('/profile');
                 },
                 child: Row(
                   children: [

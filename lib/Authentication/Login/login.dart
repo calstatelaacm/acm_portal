@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Login extends StatefulWidget {
+  static const String route = '/login';
   @override
   _LoginState createState() => _LoginState();
 }
@@ -120,8 +121,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 10,),
                   GestureDetector(
                     onTap: (){
-                      Navigator.of(context)
-                          .push(new MaterialPageRoute(builder: (context) => CreateAccount()));
+                      Navigator.of(context).pushNamed('/signup');
                     },
                     child: Text("New? Create Account", textAlign: TextAlign.center,
                       style: GoogleFonts.openSans(fontSize: 20),),
@@ -144,8 +144,7 @@ class _LoginState extends State<Login> {
             .signInWithEmailAndPassword(email: email, password: pwd);
         // Toast.show("Logging in successful", context, gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(
-            new MaterialPageRoute(builder: (context) => Events()));
+        Navigator.of(context).pushReplacementNamed('/events');
       } catch (e) {
         debugPrint(e.toString());
       }

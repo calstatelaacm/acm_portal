@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CreateAccount extends StatefulWidget {
+  static const String route = '/signup';
   @override
   _CreateAccountState createState() => _CreateAccountState();
 }
@@ -215,10 +216,11 @@ class _CreateAccountState extends State<CreateAccount> {
              "major": major.text,
              "classStanding": classStanding.text,
              "points": 10,
+             "membership": false,
              "uid": currUser.user.uid,
            }).whenComplete(() => {
              Navigator.of(context).popUntil((route) => route.isFirst),
-             Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()))
+             Navigator.of(context).pushReplacementNamed('/events')
            })
         });
       }

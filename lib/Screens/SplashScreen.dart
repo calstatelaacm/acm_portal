@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
+  static const String route = '/';
+
   @override
   _SplashScreenState createState() => _SplashScreenState();
 }
@@ -17,15 +19,15 @@ class _SplashScreenState extends State<SplashScreen> {
     //User is not logged in
     if(user == null){
       {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.pushReplacementNamed(context, "/login");
+        // Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushNamed('/login');
       }
     }
     //User is logged in
     else{
       {
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.pushReplacementNamed(context, "/events");
+        // Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushNamed('/events');
       }
     }
     super.initState();

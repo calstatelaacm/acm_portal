@@ -1,6 +1,7 @@
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
+import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:acm_web/Screens/SplashScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -39,7 +40,15 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      home: _getLandingPage()
+      initialRoute: '/',
+      routes: {
+        '/': (context) => _getLandingPage(),
+        '/login': (context) => Login(),
+        '/signup': (context) => CreateAccount(),
+        '/events': (context) => Events(),
+        '/leadershipBoard': (context) => LeadershipBoard(),
+        '/profile': (context) => Profile()
+      },
     );
   }
 
@@ -47,6 +56,11 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
+        if(ConnectionState.waiting == true){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         if (snapshot.hasData) {
           if (snapshot.data.providerData.length == 1) {
             // logged in using email and password

@@ -1,5 +1,6 @@
 import 'package:acm_web/Authentication/UserCard.dart';
 import 'package:acm_web/Screens/Events/Events.dart';
+import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:expansion_card/expansion_card.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LeadershipBoard extends StatefulWidget {
+  static const String route = '/leaderboard';
   @override
   _LeadershipBoardState createState() => _LeadershipBoardState();
 }
@@ -78,7 +80,8 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
           actions: [
             FlatButton(
                 onPressed: (){
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushReplacementNamed('/events');
                 },
                 child: Row(
                   children: [
@@ -93,6 +96,18 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
                   children: [
                     Icon(Icons.leaderboard,),
                     Text(" Leadership Board", style: GoogleFonts.roboto(),)
+                  ],
+                )
+            ),
+            FlatButton(
+                onPressed: (){
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushReplacementNamed('/profile');
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.account_circle,),
+                    Text("Profile", style: GoogleFonts.roboto(),)
                   ],
                 )
             )
