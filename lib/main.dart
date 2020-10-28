@@ -1,7 +1,17 @@
+import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
+import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
+import 'package:acm_web/Screens/Profile/Profile.dart';
+import 'package:acm_web/Screens/SplashScreen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'Screens/Events/Events.dart';
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -10,6 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'ACM Portal',
       theme: ThemeData(
         // This is the theme of your application.
@@ -27,8 +38,41 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      home: Login(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => _getLandingPage(),
+        '/login': (context) => Login(),
+        '/signup': (context) => CreateAccount(),
+        '/events': (context) => Events(),
+        '/leadershipBoard': (context) => LeadershipBoard(),
+        '/profile': (context) => Profile()
+      },
+    );
+  }
+
+  Widget _getLandingPage() {
+    return StreamBuilder<User>(
+      stream: FirebaseAuth.instance.authStateChanges(),
+      builder: (BuildContext context, snapshot) {
+        if(ConnectionState.waiting == true){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (snapshot.hasData) {
+          if (snapshot.data.providerData.length == 1) {
+            // logged in using email and password
+            return Events();
+          } else {
+            // don't remove this
+            return Events();
+          }
+        } else {
+          return Login();
+        }
+      },
     );
   }
 }

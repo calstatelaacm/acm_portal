@@ -1,20 +1,25 @@
-import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
+import 'package:acm_web/Authentication/UserCard.dart';
+import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:acm_web/Screens/Profile/Profile.dart';
+import 'package:expansion_card/expansion_card.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class Events extends StatefulWidget {
-  static const String route = '/events';
+class LeadershipBoard extends StatefulWidget {
+  static const String route = '/leaderboard';
   @override
-  _EventsState createState() => _EventsState();
+  _LeadershipBoardState createState() => _LeadershipBoardState();
 }
 
-class _EventsState extends State<Events> {
+class _LeadershipBoardState extends State<LeadershipBoard> {
   @override
   Widget build(BuildContext context) {
     if(UniversalPlatform.isAndroid || MediaQuery.of(context).size.width < 600){
-      mobileDisplay();
+      return mobileDisplay();
     }
     return webDisplay();
   }
@@ -30,13 +35,13 @@ class _EventsState extends State<Events> {
             children: [
               ListTile(
                 onTap: (){
-                  Navigator.pop(context);
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
                 },
                 title: Text("Events"),
               ),
               ListTile(
                 onTap: (){
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+                  Navigator.pop(context);
                 },
                 title: Text("Leadership Board"),
               ),
@@ -62,10 +67,8 @@ class _EventsState extends State<Events> {
             ],
           ),
         ),
-        body: Center(
-          child: Text("Mobile Under development"),
-        ),
-      )
+        body: retriveLeadershipBoard(),
+      ),
     );
   }
 
@@ -76,7 +79,10 @@ class _EventsState extends State<Events> {
           title: Image.asset('assets/acmlogo1.png', width: 100),
           actions: [
             FlatButton(
-                onPressed: null,
+                onPressed: (){
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushReplacementNamed('/events');
+                },
                 child: Row(
                   children: [
                     Icon(Icons.calendar_today),
@@ -85,10 +91,7 @@ class _EventsState extends State<Events> {
                 )
             ),
             FlatButton(
-                onPressed: (){
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).pushReplacementNamed('/leadershipBoard');
-                },
+                onPressed: null,
                 child: Row(
                   children: [
                     Icon(Icons.leaderboard,),
@@ -98,7 +101,8 @@ class _EventsState extends State<Events> {
             ),
             FlatButton(
                 onPressed: (){
-                  Navigator.of(context).pushNamed('/profile');
+                  Navigator.of(context).popUntil((route) => route.isFirst);
+                  Navigator.of(context).pushReplacementNamed('/profile');
                 },
                 child: Row(
                   children: [
@@ -109,8 +113,47 @@ class _EventsState extends State<Events> {
             )
           ],
         ),
-        body: Text("Under Development"),
+        body: Row(
+          children: [
+            Expanded(
+              child: UserCard(),
+            ),
+            Expanded(child: retriveLeadershipBoard())
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget retriveLeadershipBoard(){
+    return StreamBuilder(
+      stream: FirebaseFirestore.instance.collection("users").orderBy("points", descending: true)
+          .limit(10).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        if(!snapshot.hasData){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.docs.length,
+          itemBuilder: (context, index){
+            DocumentSnapshot docSnapshot = snapshot.data.docs[index];
+            var id = docSnapshot.id;
+            return Padding(
+              padding: EdgeInsets.all(8),
+              child: Card(
+                elevation: 10,
+                child: ListTile(
+                  leading: Icon(Icons.person_outline),
+                  title: Text("Name: " + docSnapshot.data()['name']),
+                  subtitle: Text("Points: " + docSnapshot.data()['points'].toString()),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }
