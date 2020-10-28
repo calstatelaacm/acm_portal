@@ -1,4 +1,4 @@
-package com.example.acm_web
+package com.example.acm_portal
 
 import io.flutter.embedding.android.FlutterActivity
 
