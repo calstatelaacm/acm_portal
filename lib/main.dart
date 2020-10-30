@@ -1,8 +1,8 @@
+import 'package:acm_web/Authentication/CompleteProfile.dart';
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
 import 'package:acm_web/Screens/Profile/Profile.dart';
-import 'package:acm_web/Screens/SplashScreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,11 +40,12 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      initialRoute: '/',
+      initialRoute: '/completeprofile',
       routes: {
         '/': (context) => _getLandingPage(),
         '/login': (context) => Login(),
         '/signup': (context) => CreateAccount(),
+        '/completeprofile': (context) => CompleteProfile(),
         '/events': (context) => Events(),
         '/leadershipBoard': (context) => LeadershipBoard(),
         '/profile': (context) => Profile()
