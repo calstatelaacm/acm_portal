@@ -10,6 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  bool isLoading = false;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String email, pwd;
   var mobileSize, webSize;
@@ -41,7 +42,9 @@ class _LoginState extends State<Login> {
               fit: BoxFit.cover
           )
       ),
-      child: Center(
+      child: isLoading ? Center(
+        child: CircularProgressIndicator(),
+      ) :Center(
         child: ListView(
           physics: BouncingScrollPhysics(),
           shrinkWrap: true,
@@ -116,7 +119,12 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: 10,),
                   RaisedButton(
-                    onPressed: signIn,
+                    onPressed: (){
+                      setState(() {
+                        isLoading = true;
+                      });
+                      signIn();
+                    },
                     child: Text("Login", style: GoogleFonts.openSans(),),
                   ),
                   SizedBox(height: 10,),
@@ -226,9 +234,14 @@ class _LoginState extends State<Login> {
                   ),
                   SizedBox(height: 10,),
                   RaisedButton(
-                    onPressed: signIn,
-                    child: Text("Login", style: GoogleFonts.openSans(),),
-                  ),
+                onPressed: (){
+                  setState(() {
+                    isLoading = true;
+                  });
+                  signIn();
+                },
+                child: Text("Login", style: GoogleFonts.openSans(),),
+              ),
                   SizedBox(height: 10,),
                   Divider(
                     indent: 20,

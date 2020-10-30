@@ -1,4 +1,4 @@
-import 'package:acm_web/Screens/Events/Events.dart';
+import 'package:acm_web/Authentication/CompleteProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +15,7 @@ class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _createAccount = new GlobalKey<FormState>();
   TextEditingController email, pwd, name, classStanding, major;
   var mobileSize, webSize;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -41,7 +42,7 @@ class _CreateAccountState extends State<CreateAccount> {
     }
     return SafeArea(
       child: Scaffold(
-        body: createAccount(),
+        body: webForm(),
       )
     );
   }
@@ -54,7 +55,9 @@ class _CreateAccountState extends State<CreateAccount> {
               fit: BoxFit.cover
           )
       ),
-      child: Center(
+      child: isLoading? Center(
+        child: CircularProgressIndicator(),
+      ) : Center(
         child: SingleChildScrollView(
           child: Form(
             key: _createAccount,
@@ -203,7 +206,12 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 SizedBox(height: 20,),
                 RaisedButton(
-                  onPressed: submitForm,
+                  onPressed: (){
+                    setState(() {
+                      isLoading = true;
+                    });
+                    submitForm();
+                  },
                   child: Text("Create Account", style: GoogleFonts.openSans(),),
                   color: Colors.blue,
                 )
@@ -215,7 +223,7 @@ class _CreateAccountState extends State<CreateAccount> {
     );
   }
 
-  Widget createAccount(){
+  Widget webForm(){
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -223,7 +231,9 @@ class _CreateAccountState extends State<CreateAccount> {
               fit: BoxFit.cover
           )
       ),
-      child: Center(
+      child: isLoading? Center(
+        child: CircularProgressIndicator(),
+      ) : Center(
         child: SingleChildScrollView(
           child: Form(
             key: _createAccount,
@@ -291,25 +301,25 @@ class _CreateAccountState extends State<CreateAccount> {
                   child: TextFormField(
                     controller: pwd,
                     decoration: InputDecoration(
-                        labelText: 'Password',
-                        hintText: 'Must be 6+ characters',
-                        filled: true,
-                        // fillColor: Colors.white.withOpacity(.85),
-                        labelStyle: GoogleFonts.openSans(color: Colors.black, fontSize: 20),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(5)),
-                            borderSide: BorderSide(
-                                color: Colors.white
-                            )
-                        ),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(5)),
-                            borderSide: BorderSide(
-                                color: Colors.white
-                            )
-                        ),
+                      labelText: 'Password',
+                      hintText: 'Must be 6+ characters',
+                      filled: true,
+                      // fillColor: Colors.white.withOpacity(.85),
+                      labelStyle: GoogleFonts.openSans(color: Colors.black, fontSize: 20),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: Colors.white
+                          )
+                      ),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(5)),
+                          borderSide: BorderSide(
+                              color: Colors.white
+                          )
+                      ),
                     ),
                     obscureText: true,
                   ),
@@ -372,7 +382,12 @@ class _CreateAccountState extends State<CreateAccount> {
                 ),
                 SizedBox(height: 20,),
                 RaisedButton(
-                  onPressed: submitForm,
+                  onPressed: (){
+                    setState(() {
+                      isLoading = true;
+                    });
+                    submitForm();
+                  },
                   child: Text("Create Account", style: GoogleFonts.openSans(),),
                   color: Colors.blue,
                 )
@@ -391,7 +406,8 @@ class _CreateAccountState extends State<CreateAccount> {
         createUserWithEmailAndPassword(email: email.text, password: pwd.text)
             .then((currUser) => {
            FirebaseFirestore.instance.collection("users")
-          .add({
+           .doc(currUser.user.uid)
+          .set({
              "name": name.text,
              "email": email.text,
              "major": major.text,
@@ -399,9 +415,11 @@ class _CreateAccountState extends State<CreateAccount> {
              "points": 10,
              "membership": false,
              "uid": currUser.user.uid,
+             "profile": ''
            }).whenComplete(() => {
              Navigator.of(context).popUntil((route) => route.isFirst),
-             Navigator.of(context).pushReplacementNamed('/events')
+             Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) =>
+                 CompleteProfile(userUid: currUser.user.uid,)))
            })
         });
       }

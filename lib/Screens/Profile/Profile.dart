@@ -24,11 +24,17 @@ class _ProfileState extends State<Profile> {
     });
   }
 
+  Future<DocumentSnapshot> getUserDoc() async{
+    return await FirebaseFirestore.instance.collection("users")
+        .doc(userUid).get();
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     retrieveUid();
+    getUserDoc();
   }
 
   @override
@@ -77,29 +83,30 @@ class _ProfileState extends State<Profile> {
             )
           ],
         ),
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance.collection("users")
-              .where("uid", isEqualTo: userUid).snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        body: FutureBuilder(
+          future: getUserDoc(),
+          builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
             if(!snapshot.hasData){
               return Center(
                 child: CircularProgressIndicator(),
               );
             }
             return ListView.builder(
-              itemCount: snapshot.data.docs.length,
+              itemCount: 1,
               itemBuilder: (context, index){
-                DocumentSnapshot docSnapshot = snapshot.data.docs[index];
+                // var snapshot = snapshot.data;
                 //Membership is not valid
-                if(docSnapshot.data()['membership'].toString() == "false"){
+                if(snapshot.data.data()['membership'].toString() == "false"){
                   return Column(
                     children: [
-                      Icon(Icons.account_circle, size: 100,),
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(snapshot.data.data()['profile']),
+                      ),
                       SizedBox(height: 10,),
-                      Text(docSnapshot.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold),),
-                      Text('Class Standing: ' + docSnapshot.data()['classStanding'],
+                      Text(snapshot.data.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold),),
+                      Text('Class Standing: ' + snapshot.data.data()['classStanding'],
                         style: GoogleFonts.openSans(),),
-                      Text('Major: ' + docSnapshot.data()['major'],
+                      Text('Major: ' + snapshot.data.data()['major'],
                         style: GoogleFonts.openSans(),),
                       SizedBox(
                         width: 200,
@@ -121,12 +128,12 @@ class _ProfileState extends State<Profile> {
                   children: [
                     Icon(Icons.account_circle, size: 100,),
                     SizedBox(height: 10,),
-                    Text(docSnapshot.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold,
+                    Text(snapshot.data.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold,
                     fontSize: 30),),
-                    Text('Class Standing: ' + docSnapshot.data()['classStanding'],
+                    Text('Class Standing: ' + snapshot.data.data()['classStanding'],
                       style: GoogleFonts.openSans(),
                     textAlign: TextAlign.left,),
-                    Text('Major: ' + docSnapshot.data()['major'],
+                    Text('Major: ' + snapshot.data.data()['major'],
                       style: GoogleFonts.openSans(),
                     textAlign: TextAlign.left,),
                     Text('Membership: Expires 05/2021', style: GoogleFonts.openSans(),)
