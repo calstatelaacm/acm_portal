@@ -37,9 +37,7 @@ dependencies:
   url_launcher:
   universal_platform:
   expansion_card:
-  flutter_web_image_picker: ^0.0.2
-  image_picker: ^0.6.7+12
-  image_picker_web: any
+  file_picker: ^2.0.12
 
 
   # The following adds the Cupertino Icons font to your application.

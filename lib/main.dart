@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      initialRoute: '/completeprofile',
+      initialRoute: '/',
       routes: {
         '/': (context) => _getLandingPage(),
         '/login': (context) => Login(),

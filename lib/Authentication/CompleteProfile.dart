@@ -1,11 +1,8 @@
 import 'dart:io';
-import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_web_image_picker/flutter_web_image_picker.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:image_picker_web/image_picker_web.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:firebase/firebase.dart' as fb;
 
@@ -21,11 +18,12 @@ class CompleteProfile extends StatefulWidget {
 class _CompleteProfileState extends State<CompleteProfile> {
   bool isLoading = false;
   File profile;
-  html.File profileImg;
+  // html.File profileImg;
 
 
   Future getImage() async{
-    var tempImg = await ImagePicker.pickImage(source: ImageSource.gallery);
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    var tempImg = File(result.files.single.path);
 
     setState(() {
       profile = tempImg;
@@ -33,10 +31,11 @@ class _CompleteProfileState extends State<CompleteProfile> {
   }
 
   Future getWebImage() async{
-    var tempImg = await ImagePickerWeb.getImage(outputType: ImageType.file);
+    FilePickerResult result = await FilePicker.platform.pickFiles();
+    var tempImg = File(result.files.single.path);
 
     setState(() {
-      profileImg = tempImg;
+      profile = tempImg;
     });
   }
 
@@ -68,7 +67,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
     return SafeArea(
         child: Scaffold(
           body: Center(
-            child: profileImg == null ? Text("Choose Profile Pic") :
+            child: profile == null ? Text("Choose Profile Pic") :
             webUpload(),
           ),
           floatingActionButton: FloatingActionButton(
@@ -87,11 +86,11 @@ class _CompleteProfileState extends State<CompleteProfile> {
       child: Container(
         child: Column(
           children: [
-            // SizedBox(
-            //   height: 200,
-            //   width: 200,
-            //   child: Image.file(profileImg.relativePath.toString()),
-            // ),
+            SizedBox(
+              height: 200,
+              width: 200,
+              child: Image.file(profile),
+            ),
             SizedBox(height: 20,),
             RaisedButton(
               onPressed: () async{
@@ -99,7 +98,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
                   isLoading = true;
                 });
                 fb.StorageReference ref = fb.storage().ref().child('profile/WebTest');
-                fb.UploadTaskSnapshot upload = await ref.put(profileImg).future;
+                fb.UploadTaskSnapshot upload = await ref.put(profile).future;
                 var downloadURL = await upload.ref.getDownloadURL();
                 FirebaseFirestore.instance.collection("users")
                     .doc(widget.userUid).update({
