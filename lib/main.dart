@@ -1,4 +1,3 @@
-import 'package:acm_web/Authentication/CompleteProfile.dart';
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
         '/': (context) => _getLandingPage(),
         '/login': (context) => Login(),
         '/signup': (context) => CreateAccount(),
-        '/completeprofile': (context) => CompleteProfile(),
         '/events': (context) => Events(),
         '/leadershipBoard': (context) => LeadershipBoard(),
         '/profile': (context) => Profile()
@@ -57,7 +55,7 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
-        if(ConnectionState.waiting == true){
+        if(ConnectionState.waiting != null){
           return Center(
             child: CircularProgressIndicator(),
           );
