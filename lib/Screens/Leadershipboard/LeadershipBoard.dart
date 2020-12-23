@@ -116,7 +116,8 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
         body: Row(
           children: [
             Expanded(
-              child: UserCard(),
+              // child: UserCard(),
+              child: getFirstPlace(),
             ),
             Expanded(child: retriveLeadershipBoard())
           ],
@@ -147,6 +148,40 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
                 child: ListTile(
                   leading: Icon(Icons.person_outline),
                   title: Text("Name: " + docSnapshot.data()['name']),
+                  subtitle: Text("Points: " + docSnapshot.data()['points'].toString()),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Widget getFirstPlace(){
+    return StreamBuilder(
+      // First item in the collection will have the most points
+      stream: FirebaseFirestore.instance.collection("users").orderBy("points", descending: true)
+          .limit(1).snapshots(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot){
+        if(!snapshot.hasData){
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        return ListView.builder(
+          itemCount: snapshot.data.docs.length,
+          itemBuilder: (context, index){
+            DocumentSnapshot docSnapshot = snapshot.data.docs[index];
+            var id = docSnapshot.id;
+            return Padding(
+              padding: EdgeInsets.all(8),
+              child: Card(
+                color: Colors.blueGrey,
+                elevation: 10,
+                child: ListTile(
+                  leading: Icon(Icons.emoji_events_outlined),
+                  title: Text("First place: " + docSnapshot.data()['name']),
                   subtitle: Text("Points: " + docSnapshot.data()['points'].toString()),
                 ),
               ),
