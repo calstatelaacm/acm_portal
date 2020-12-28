@@ -55,11 +55,11 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
-        if(ConnectionState.waiting != null){
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+        // if(ConnectionState.waiting != null){
+        //   return Center(
+        //     child: CircularProgressIndicator(),
+        //   );
+        // }
         if (snapshot.hasData) {
           if (snapshot.data.providerData.length == 1) {
             // logged in using email and password

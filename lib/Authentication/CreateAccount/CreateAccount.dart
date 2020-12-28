@@ -19,6 +19,8 @@ class _CreateAccountState extends State<CreateAccount> {
   String userPhotoUrl = '';
   var mobileSize, webSize;
   bool isLoading = false;
+  bool isError = false;
+  String errorMsg = 'Some fields are empty';
 
   @override
   void initState() {
@@ -468,29 +470,34 @@ class _CreateAccountState extends State<CreateAccount> {
 
   void submitForm() async{
     if(_createAccount.currentState.validate()){
+      _createAccount.currentState.save();
       try{
         FirebaseAuth.instance.
         createUserWithEmailAndPassword(email: email.text, password: pwd.text)
             .then((currUser) => {
-           FirebaseFirestore.instance.collection("users")
-           .doc(currUser.user.uid)
-          .set({
-             "name": name.text,
-             "email": email.text,
-             "major": major.text,
-             "classStanding": classStanding.text,
-             "points": 10,
-             "membership": false,
-             "uid": currUser.user.uid,
-             "profile": userPhotoUrl
-           }).whenComplete(() => {
-             Navigator.of(context).popUntil((route) => route.isFirst),
-             Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) =>
-                 Events()))
-           })
+          FirebaseFirestore.instance.collection("users")
+              .doc(currUser.user.uid)
+              .set({
+            "name": name.text,
+            "email": email.text,
+            "major": major.text,
+            "classStanding": classStanding.text,
+            "points": 10,
+            "membership": false,
+            "uid": currUser.user.uid,
+            "profile": userPhotoUrl
+          }).whenComplete(() => {
+            Navigator.of(context).popUntil((route) => route.isFirst),
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) =>
+                Events()))
+          })
         });
       }
       catch(e){
+        setState(() {
+          isLoading = false;
+          isError = true;
+        });
         debugPrint(e.toString());
       }
     }

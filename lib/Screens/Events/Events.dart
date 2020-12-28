@@ -23,6 +23,7 @@ class _EventsState extends State<Events> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text('ACM Portal'),
         ),
         drawer: Drawer(
