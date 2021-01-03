@@ -31,7 +31,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     retrieveUid();
     getUserDoc();
@@ -96,19 +95,42 @@ class _ProfileState extends State<Profile> {
               itemBuilder: (context, index){
                 // var snapshot = snapshot.data;
                 //Membership is not valid
-                if(snapshot.data.data()['membership'].toString() == "false"){
+                if(snapshot.data.data()['membership'].toString() == "false") {
                   return Column(
                     children: [
+                      SizedBox(height: 60,),
                       CircleAvatar(
-                        backgroundImage: NetworkImage(snapshot.data.data()['profile']),
+                        backgroundColor: Colors.black,
+                        radius: 130,
+                        child: CircleAvatar(
+                          backgroundColor: Colors.grey,
+                          backgroundImage: NetworkImage(snapshot.data.data()['profile']),
+                          //An optional error callback for errors emitted when loading backgroundImage
+                          onBackgroundImageError: (exception, stackTrace) {
+                            print('flutter: ══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════\nflutter: The following ArgumentError was thrown resolving an image codec:\nflutter: Invalid argument(s): No host specified in URI file:///profile');
+                          },
+                          //child: Text (
+                          //  'Profile Picture',
+                           // style: TextStyle(fontSize: 25, color: Colors.black),
+                          //),
+                          radius: 120,
+                        ),
                       ),
-                      SizedBox(height: 10,),
-                      Text(snapshot.data.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold),),
-                      Text('Class Standing: ' + snapshot.data.data()['classStanding'],
-                        style: GoogleFonts.openSans(),),
-                      Text('Major: ' + snapshot.data.data()['major'],
-                        style: GoogleFonts.openSans(),),
+                      SizedBox(height: 60,),
+                      Divider(
+                        color: Colors.white,
+                      ),
+                      SizedBox(height: 60,),                                //openSans
+                      Text(snapshot.data.data()['name'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                      SizedBox(height: 30,),
+                      Text('Class Standing: ' + snapshot.data.data()['classStanding'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                      SizedBox(height: 30,),
+                      Text('Major: ' + snapshot.data.data()['major'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                      SizedBox(height: 30,),
+                      Text('Email: ' + snapshot.data.data()['email'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                      SizedBox(height: 30,),
                       SizedBox(
+                        //height: 240,
                         width: 200,
                         child: GestureDetector(
                           onTap: (){
@@ -117,9 +139,9 @@ class _ProfileState extends State<Profile> {
                             }
                           },
                           child: Text("Membership: We are reviewing you account. If you haven't bought a membership click here",
-                            style: GoogleFonts.openSans(),),
+                            style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
                         ),
-                      )
+                      ),
                     ],
                   );
                 }
