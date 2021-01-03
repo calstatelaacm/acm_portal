@@ -109,10 +109,6 @@ class _ProfileState extends State<Profile> {
                           onBackgroundImageError: (exception, stackTrace) {
                             print('flutter: ══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════\nflutter: The following ArgumentError was thrown resolving an image codec:\nflutter: Invalid argument(s): No host specified in URI file:///profile');
                           },
-                          //child: Text (
-                          //  'Profile Picture',
-                           // style: TextStyle(fontSize: 25, color: Colors.black),
-                          //),
                           radius: 120,
                         ),
                       ),
@@ -130,15 +126,14 @@ class _ProfileState extends State<Profile> {
                       Text('Email: ' + snapshot.data.data()['email'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
                       SizedBox(height: 30,),
                       SizedBox(
-                        //height: 240,
-                        width: 200,
+                        width: 450,
                         child: GestureDetector(
                           onTap: (){
                             if(canLaunch('https://acm-calstatela.com/membership') != null){
                               launch('https://acm-calstatela.com/membership');
                             }
                           },
-                          child: Text("Membership: We are reviewing you account. If you haven't bought a membership click here",
+                          child: Text("Membership: We are reviewing you're account. If you haven't bought a membership click here",
                             style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
                         ),
                       ),
@@ -148,17 +143,44 @@ class _ProfileState extends State<Profile> {
                 //Membership is valid
                 return Column(
                   children: [
-                    Icon(Icons.account_circle, size: 100,),
-                    SizedBox(height: 10,),
-                    Text(snapshot.data.data()['name'], style: GoogleFonts.openSans(fontWeight: FontWeight.bold,
-                    fontSize: 30),),
-                    Text('Class Standing: ' + snapshot.data.data()['classStanding'],
-                      style: GoogleFonts.openSans(),
-                    textAlign: TextAlign.left,),
-                    Text('Major: ' + snapshot.data.data()['major'],
-                      style: GoogleFonts.openSans(),
-                    textAlign: TextAlign.left,),
-                    Text('Membership: Expires 05/2021', style: GoogleFonts.openSans(),)
+                    SizedBox(height: 60,),
+                    CircleAvatar(
+                      backgroundColor: Colors.black,
+                      radius: 130,
+                      child: CircleAvatar(
+                        backgroundColor: Colors.grey,
+                        backgroundImage: NetworkImage(snapshot.data.data()['profile']),
+                        //An optional error callback for errors emitted when loading backgroundImage
+                        onBackgroundImageError: (exception, stackTrace) {
+                          print('flutter: ══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════\nflutter: The following ArgumentError was thrown resolving an image codec:\nflutter: Invalid argument(s): No host specified in URI file:///profile');
+                        },
+                        radius: 120,
+                      ),
+                    ),
+                    SizedBox(height: 60,),
+                    Divider(
+                      color: Colors.white,
+                    ),
+                    SizedBox(height: 60,),                                //openSans
+                    Text(snapshot.data.data()['name'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                    SizedBox(height: 30,),
+                    Text('Class Standing: ' + snapshot.data.data()['classStanding'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                    SizedBox(height: 30,),
+                    Text('Major: ' + snapshot.data.data()['major'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                    SizedBox(height: 30,),
+                    Text('Email: ' + snapshot.data.data()['email'], style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                    SizedBox(height: 30,),
+                    SizedBox(
+                      child: GestureDetector(
+                        onTap: (){
+                          if(canLaunch('https://acm-calstatela.com/membership') != null){
+                            launch('https://acm-calstatela.com/membership');
+                          }
+                        },
+                        child: Text("Membership: Active",
+                          style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
+                      ),
+                    ),
                   ],
                 );
               },
