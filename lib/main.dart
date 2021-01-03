@@ -5,8 +5,10 @@ import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 import 'Screens/Events/Events.dart';
+import 'Screens/Navigation.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,15 +41,15 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => _getLandingPage(),
-        '/login': (context) => Login(),
-        '/signup': (context) => CreateAccount(),
-        '/events': (context) => Events(),
-        '/leadershipBoard': (context) => LeadershipBoard(),
-        '/profile': (context) => Profile()
-      },
+      home: _getLandingPage(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/login': (context) => Login(),
+      //   '/signup': (context) => CreateAccount(),
+      //   '/events': (context) => Events(),
+      //   '/leadershipBoard': (context) => LeadershipBoard(),
+      //   '/profile': (context) => Profile()
+      // },
     );
   }
 
@@ -63,10 +65,20 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasData) {
           if (snapshot.data.providerData.length == 1) {
             // logged in using email and password
-            return Events();
+            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+              return Navigation();
+            }
+            else{
+              return Events();
+            }
           } else {
             // don't remove this
-            return Events();
+            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+              return Navigation();
+            }
+            else{
+              return Events();
+            }
           }
         } else {
           return Login();
