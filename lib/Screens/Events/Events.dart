@@ -57,11 +57,14 @@ class _EventsState extends State<Events> {
             FlatButton(
                 onPressed: () {
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+                  Navigator.of(context).push(new MaterialPageRoute(
+                      builder: (context) => LeadershipBoard()));
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.leaderboard,),
+                    Icon(
+                      Icons.leaderboard,
+                    ),
                     Text(
                       " Leadership Board",
                       style: GoogleFonts.roboto(),
@@ -70,7 +73,8 @@ class _EventsState extends State<Events> {
                 )),
             FlatButton(
                 onPressed: () {
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Profile()));
+                  Navigator.of(context).push(
+                      new MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: Row(
                   children: [
@@ -156,25 +160,27 @@ class _EventsState extends State<Events> {
                               child: GestureDetector(
                                 onTap: () {
                                   showDialog(
-                                      context: context,
-                                      builder: (context) {
-                                        return AlertDialog(
-                                          content: Column(
-                                            children: [
-                                              Image.network(
-                                                document['image'],
-                                                height: 150,
-                                                width: 100,
-                                              ),
-                                              FlatButton(
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                  child: Text('Close'))
-                                            ],
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      content: Column(
+                                        children: [
+                                          Image.network(
+                                            document['image'],
+                                            height: 500,
+                                            width: 400,
                                           ),
-                                        );
-                                      });
+                                          Padding(
+                                            padding: EdgeInsets.only(top: 10.0),
+                                          ),
+                                          FlatButton(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: Text('Close'))
+                                        ],
+                                      ),
+                                    ),
+                                  );
                                 },
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(25),
