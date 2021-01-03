@@ -1,3 +1,4 @@
+import 'package:acm_web/Authentication/Login/login.dart';
 import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -17,16 +18,18 @@ class _ProfileState extends State<Profile> {
   User currUser;
   String userUid;
 
-  void retrieveUid(){
+  void retrieveUid() {
     currUser = FirebaseAuth.instance.currentUser;
     setState(() {
       userUid = currUser.uid;
     });
   }
 
-  Future<DocumentSnapshot> getUserDoc() async{
-    return await FirebaseFirestore.instance.collection("users")
-        .doc(userUid).get();
+  Future<DocumentSnapshot> getUserDoc() async {
+    return await FirebaseFirestore.instance
+        .collection("users")
+        .doc(userUid)
+        .get();
   }
 
   @override
@@ -41,47 +44,59 @@ class _ProfileState extends State<Profile> {
     return webDisplay();
   }
 
-  Widget webDisplay(){
+  Widget webDisplay() {
+    if(userUid == null){
+      {Navigator.of(context).pushReplacementNamed("/login");}
+    }
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Image.asset('assets/acmlogo1.png', width: 100),
-          actions: [
-            FlatButton(
-                onPressed: (){
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).pushReplacementNamed('/events');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    Text(" Events", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            ),
-            FlatButton(
-                onPressed: (){
-                  Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).pushReplacementNamed('/leadershipBoard');
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.leaderboard,),
-                    Text(" Leadership Board", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            ),
-            FlatButton(
-                onPressed: null,
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle,),
-                    Text(" Profile", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            )
-          ],
-        ),
+        automaticallyImplyLeading: false,
+        title: Image.asset('assets/acmlogo1.png', width: 100),
+        actions: [
+          FlatButton(
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Events()));
+              },
+              child: Row(
+                children: [
+                  Icon(Icons.calendar_today),
+                  Text(
+                    " Events",
+                    style: GoogleFonts.roboto(),
+                  )
+                ],
+              )),
+          FlatButton(
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+              },
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.leaderboard,
+                  ),
+                  Text(
+                    " Leadership Board",
+                    style: GoogleFonts.roboto(),
+                  )
+                ],
+              )),
+          FlatButton(
+              onPressed: null,
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.account_circle,
+                  ),
+                  Text(
+                    " Profile",
+                    style: GoogleFonts.roboto(),
+                  )
+                ],
+              ))
+        ],
+      ),
         body: FutureBuilder(
           future: getUserDoc(),
           builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot){
@@ -183,9 +198,9 @@ class _ProfileState extends State<Profile> {
                     ),
                   ],
                 );
-              },
+              }
             );
-          },
+          }
         ),
       )
     );

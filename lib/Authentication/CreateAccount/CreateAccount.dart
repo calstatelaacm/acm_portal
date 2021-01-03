@@ -1,9 +1,11 @@
-import 'package:acm_web/Authentication/CompleteProfile.dart';
+import 'dart:html';
+import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:universal_platform/universal_platform.dart';
+import 'package:image_picker_web/image_picker_web.dart';
+import 'package:firebase/firebase.dart' as fb;
 
 class CreateAccount extends StatefulWidget {
   static const String route = '/signup';
@@ -14,6 +16,7 @@ class CreateAccount extends StatefulWidget {
 class _CreateAccountState extends State<CreateAccount> {
   final GlobalKey<FormState> _createAccount = new GlobalKey<FormState>();
   TextEditingController email, pwd, name, classStanding, major;
+  String userPhotoUrl = '';
   var mobileSize, webSize;
   bool isLoading = false;
 
@@ -33,7 +36,7 @@ class _CreateAccountState extends State<CreateAccount> {
     mobileSize = (MediaQuery.of(context).size.width*9)/(10);
     webSize = MediaQuery.of(context).size.width/2;
 
-    if(UniversalPlatform.isAndroid || MediaQuery.of(context).size.width < 600){
+    if(MediaQuery.of(context).size.width < 600){
       return SafeArea(
         child: Scaffold(
           body: mobileForm(),
@@ -115,7 +118,6 @@ class _CreateAccountState extends State<CreateAccount> {
                                 color: Colors.white
                             )
                         )
-
                     ),
                   ),
                 ),
@@ -200,9 +202,41 @@ class _CreateAccountState extends State<CreateAccount> {
                                 color: Colors.white
                             )
                         )
-
                     ),
                   ),
+                ),
+                SizedBox(height: 20,),
+                SizedBox(
+                  width: mobileSize,
+                  child: GestureDetector(
+                    onTap: (){
+                      getWebImage();
+                    },
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: userPhotoUrl == ''? 'Choose Picture' : 'Picture has been uploaded',
+                          filled: true,
+                          // fillColor: Colors.white.withOpacity(.85),
+                          labelStyle: GoogleFonts.openSans(color: Colors.black, fontSize: 20),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Colors.white
+                              )
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Colors.white
+                              )
+                          )
+                        ),
+                      ),
+                    ),
+                  )
                 ),
                 SizedBox(height: 20,),
                 RaisedButton(
@@ -381,6 +415,39 @@ class _CreateAccountState extends State<CreateAccount> {
                   ),
                 ),
                 SizedBox(height: 20,),
+                SizedBox(
+                  width: webSize,
+                  child: GestureDetector(
+                    onTap: (){
+                      getWebImage();
+                    },
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: userPhotoUrl == ''? 'Choose Picture' : 'Picture has been uploaded',
+                          filled: true,
+                          // fillColor: Colors.white.withOpacity(.85),
+                          labelStyle: GoogleFonts.openSans(color: Colors.black, fontSize: 20),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Colors.white
+                              )
+                          ),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(5)),
+                              borderSide: BorderSide(
+                                  color: Colors.white
+                              )
+                          )
+                        ),
+                      ),
+                    ),
+                  )
+                ),
+                SizedBox(height: 20,),
                 RaisedButton(
                   onPressed: (){
                     setState(() {
@@ -415,11 +482,11 @@ class _CreateAccountState extends State<CreateAccount> {
              "points": 10,
              "membership": false,
              "uid": currUser.user.uid,
-             "profile": ''
+             "profile": userPhotoUrl
            }).whenComplete(() => {
              Navigator.of(context).popUntil((route) => route.isFirst),
              Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) =>
-                 CompleteProfile(userUid: currUser.user.uid,)))
+                 Events()))
            })
         });
       }
@@ -427,5 +494,22 @@ class _CreateAccountState extends State<CreateAccount> {
         debugPrint(e.toString());
       }
     }
+  }
+
+  getWebImage() async{
+    File fromPicker = await ImagePickerWeb.getImage(outputType: ImageType.file);
+
+    if(fromPicker != null){
+      uploadToFirebase(fromPicker);
+    }
+  }
+
+  uploadToFirebase(File imageFile) async {
+    fb.StorageReference ref = fb.storage().ref().child('profile/$imageFile');
+    fb.UploadTaskSnapshot upload = await ref.put(imageFile).future;
+    var downloadURL = await upload.ref.getDownloadURL();
+    setState(() {
+      userPhotoUrl = downloadURL.toString();
+    });
   }
 }

@@ -1,4 +1,3 @@
-import 'package:acm_web/Authentication/CompleteProfile.dart';
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
 import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
@@ -6,8 +5,10 @@ import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:universal_platform/universal_platform.dart';
 
 import 'Screens/Events/Events.dart';
+import 'Screens/Navigation.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -40,16 +41,15 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.dark,
       darkTheme: ThemeData.dark(),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => _getLandingPage(),
-        '/login': (context) => Login(),
-        '/signup': (context) => CreateAccount(),
-        '/completeprofile': (context) => CompleteProfile(),
-        '/events': (context) => Events(),
-        '/leadershipBoard': (context) => LeadershipBoard(),
-        '/profile': (context) => Profile()
-      },
+      home: _getLandingPage(),
+      // initialRoute: '/',
+      // routes: {
+      //   '/login': (context) => Login(),
+      //   '/signup': (context) => CreateAccount(),
+      //   '/events': (context) => Events(),
+      //   '/leadershipBoard': (context) => LeadershipBoard(),
+      //   '/profile': (context) => Profile()
+      // },
     );
   }
 
@@ -57,17 +57,23 @@ class MyApp extends StatelessWidget {
     return StreamBuilder<User>(
       stream: FirebaseAuth.instance.authStateChanges(),
       builder: (BuildContext context, snapshot) {
-        if(ConnectionState.waiting == true){
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
+        // if(ConnectionState.waiting != null){
+        //   return Center(
+        //     child: CircularProgressIndicator(),
+        //   );
+        // }
         if (snapshot.hasData) {
           if (snapshot.data.providerData.length == 1) {
             // logged in using email and password
+            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+              return Navigation();
+            }
             return Events();
           } else {
             // don't remove this
+            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+              return Navigation();
+            }
             return Events();
           }
         } else {
