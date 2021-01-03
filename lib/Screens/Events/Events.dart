@@ -26,45 +26,10 @@ class _EventsState extends State<Events> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('ACM Portal'),
-        ),
-        drawer: Drawer(
-          child: ListView(
-            children: [
-              ListTile(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                title: Text("Events"),
-              ),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => LeadershipBoard()));
-                },
-                title: Text("Leadership Board"),
-              ),
-              Divider(
-                indent: 10,
-                endIndent: 10,
-                color: Colors.white,
-              ),
-              ListTile(
-                title: Text("Request Event"),
-              ),
-              ListTile(
-                title: Text("Request Project"),
-              ),
-              Divider(
-                indent: 10,
-                endIndent: 10,
-                color: Colors.white,
-              ),
-              ListTile(
-                title: Text("Profile"),
-              ),
-            ],
-          ),
+          title: Text('Events'),
+          elevation: 0,
+          centerTitle: true,
+          automaticallyImplyLeading: false,
         ),
         body: events(),
       ),
@@ -75,6 +40,7 @@ class _EventsState extends State<Events> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Image.asset('assets/acmlogo1.png', width: 100),
           actions: [
             FlatButton(
@@ -91,12 +57,11 @@ class _EventsState extends State<Events> {
             FlatButton(
                 onPressed: () {
                   // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context)
-                      .pushReplacementNamed('/leadershipBoard');
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
                 },
                 child: Row(
                   children: [
-                    // Icon(Icons.leaderboard,),
+                    Icon(Icons.leaderboard,),
                     Text(
                       " Leadership Board",
                       style: GoogleFonts.roboto(),
@@ -105,7 +70,7 @@ class _EventsState extends State<Events> {
                 )),
             FlatButton(
                 onPressed: () {
-                  Navigator.of(context).pushNamed('/profile');
+                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Profile()));
                 },
                 child: Row(
                   children: [
