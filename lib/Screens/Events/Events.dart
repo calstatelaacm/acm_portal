@@ -121,7 +121,38 @@ class _EventsState extends State<Events> {
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 450,                    
+                          child: Center(
+                              child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Image.network(
+                                  document['image'],
+                                  height: 500,
+                                  width: 400,
+                                ),
+                                ElevatedButton(
+                                  child: const Text('RSVP'),
+                                  onPressed: () {
+                                    if (canLaunch(document['url']) != null) {
+                                      launch(document['url']);
+                                    }
+                                  },
+                                )
+                              ],
+                            ),
+                          )),
+                        );
+                      },
+                    );
+                  },
                   leading: Image.network(
                     document['image'],
                     height: 150,
