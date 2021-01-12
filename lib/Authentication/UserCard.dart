@@ -110,7 +110,7 @@ class _UserCardState extends State<UserCard> {
                     "Major: " + docSnapshot.data()['major'],
                   ),
                   Text(
-                    "Email: " + docSnapshot.data()['classStanding'],
+                    "Class standing: " + docSnapshot.data()['classStanding'],
                   ),
                   Text("Membership valid till end of current school year"),
                   RaisedButton(
