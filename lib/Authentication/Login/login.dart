@@ -1,3 +1,4 @@
+import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -138,7 +139,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 10,),
                   GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pushNamed('/signup');
+                      Navigator.of(context).push(new MaterialPageRoute(builder: (context) => CreateAccount()));
                     },
                     child: Text("New? Create Account", textAlign: TextAlign.center,
                       style: GoogleFonts.openSans(fontSize: 20),),
@@ -253,7 +254,7 @@ class _LoginState extends State<Login> {
                   SizedBox(height: 10,),
                   GestureDetector(
                     onTap: (){
-                      Navigator.of(context).pushNamed('/signup');
+                      Navigator.of(context).push(new MaterialPageRoute(builder: (context) => CreateAccount()));
                     },
                     child: Text("New? Create Account", textAlign: TextAlign.center,
                       style: GoogleFonts.openSans(fontSize: 20),),
