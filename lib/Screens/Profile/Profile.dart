@@ -150,6 +150,15 @@ class _ProfileState extends State<Profile> {
                             style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
                         ),
                       ),
+                      SizedBox(height: 30,),
+                      SizedBox(height: 30,
+                          child: RaisedButton(
+                            onPressed: () {
+                              _signOut();
+                            },
+                            child: Text("Log out"),
+                          )),
+                      SizedBox(height: 30,),
                     ],
                   );
                 }
@@ -194,6 +203,15 @@ class _ProfileState extends State<Profile> {
                           style: GoogleFonts.montserrat(fontWeight: FontWeight.normal,fontSize: 25),),
                       ),
                     ),
+                    SizedBox(height: 30,),
+                    SizedBox(height: 30,
+                    child: RaisedButton(
+                      onPressed: () {
+                        _signOut();
+                        },
+                      child: Text("Log out"),
+                    )),
+                    SizedBox(height: 30,),
                   ],
                 );
               }
@@ -202,5 +220,14 @@ class _ProfileState extends State<Profile> {
         ),
       )
     );
+  }
+  Future<void> _signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (BuildContext context) => Login()));
+    } catch (e) {
+      print(e);
+    }
+
   }
 }
