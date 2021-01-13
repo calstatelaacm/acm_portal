@@ -53,20 +53,20 @@ class _UserCardState extends State<UserCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
-                          "User Name: " + docSnapshot.data()['name'],
+                          "Name: " + docSnapshot.data()['name'],
                         ),
                         Text(
-                          "User Email: " + docSnapshot.data()['email'],
+                          "Email: " + docSnapshot.data()['email'],
                         ),
                       ],
                     ),
                   ),
                   children: <Widget>[
                     Text(
-                      "User Email: " + docSnapshot.data()['major'],
+                      "Major: " + docSnapshot.data()['major'],
                     ),
                     Text(
-                      "User Email: " + docSnapshot.data()['classStanding'],
+                      "Class Standing: " + docSnapshot.data()['classStanding'],
                     ),
                     GestureDetector(
                       onTap: (){
@@ -97,20 +97,20 @@ class _UserCardState extends State<UserCard> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        "User Name: " + docSnapshot.data()['name'],
+                        "Name: " + docSnapshot.data()['name'],
                       ),
                       Text(
-                        "User Email: " + docSnapshot.data()['email'],
+                        "Email: " + docSnapshot.data()['email'],
                       ),
                     ],
                   ),
                 ),
                 children: <Widget>[
                   Text(
-                    "User Email: " + docSnapshot.data()['major'],
+                    "Major: " + docSnapshot.data()['major'],
                   ),
                   Text(
-                    "User Email: " + docSnapshot.data()['classStanding'],
+                    "Class standing: " + docSnapshot.data()['classStanding'],
                   ),
                   Text("Membership valid till end of current school year"),
                   RaisedButton(
