@@ -1,5 +1,6 @@
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Screens/Events/Events.dart';
+import 'package:acm_web/Screens/Navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -276,8 +277,14 @@ class _LoginState extends State<Login> {
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: pwd);
         // Toast.show("Logging in successful", context, gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        Navigator.of(context).popUntil((route) => route.isFirst);
-        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+        if(MediaQuery.of(context).size.width < 600){
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
+        }
+        else{
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+        }
       } catch (e) {
         debugPrint(e.toString());
       }

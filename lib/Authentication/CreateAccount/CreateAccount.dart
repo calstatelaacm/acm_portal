@@ -1,11 +1,13 @@
 import 'dart:html';
 import 'package:acm_web/Screens/Events/Events.dart';
+import 'package:acm_web/Screens/Navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker_web/image_picker_web.dart';
 import 'package:firebase/firebase.dart' as fb;
+import 'package:universal_platform/universal_platform.dart';
 
 class CreateAccount extends StatefulWidget {
   static const String route = '/signup';
@@ -483,12 +485,16 @@ class _CreateAccountState extends State<CreateAccount> {
              "membership": false,
              "uid": currUser.user.uid,
              "profile": userPhotoUrl
-           }).whenComplete(() => {
-             Navigator.of(context).popUntil((route) => route.isFirst),
-             Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) =>
-                 Events()))
            })
         });
+        if(MediaQuery.of(context).size.width < 600){
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
+        }
+        else{
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
+        }
       }
       catch(e){
         debugPrint(e.toString());
