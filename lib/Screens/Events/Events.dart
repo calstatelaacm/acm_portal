@@ -15,9 +15,8 @@ class Events extends StatefulWidget {
 class _EventsState extends State<Events> {
   @override
   Widget build(BuildContext context) {
-    if (UniversalPlatform.isAndroid ||
-        MediaQuery.of(context).size.width < 600) {
-      mobileDisplay();
+    if (UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600) {
+      return mobileDisplay();
     }
     return webDisplay();
   }
@@ -25,12 +24,6 @@ class _EventsState extends State<Events> {
   Widget mobileDisplay() {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text('Events'),
-          elevation: 0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-        ),
         body: events(),
       ),
     );
@@ -117,7 +110,11 @@ class _EventsState extends State<Events> {
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                 return ListTile(
-                  onTap: () {},
+                  onTap: () {
+                    if (canLaunch(document['url']) != null) {
+                      launch(document['url']);
+                    }
+                  },
                   leading: Image.network(
                     document['image'],
                     height: 150,

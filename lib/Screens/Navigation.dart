@@ -9,50 +9,91 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  @override
-  Widget build(BuildContext context) {
-    return mobileUI();
-  }
+  
+  int index = 0;
 
-  Widget mobileUI(){
-    int _selectedPage = 0;
-    final _pages = [
+  final _pages = [
       Events(),
       LeadershipBoard(),
       Profile(),
-    ];
+  ];
 
-    void _onItemTapped(int index){
-      setState(() {
-        _selectedPage = index;
-      });
-    }
-
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Center(
-          child: _pages[_selectedPage]
+        resizeToAvoidBottomInset: false,
+        key: _scaffoldKey,
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          title: Text('ACM Portal'),
+          elevation: 0,
+          leading: IconButton(
+            onPressed: (){
+              _scaffoldKey.currentState.openDrawer();
+            },
+            icon: Icon(Icons.menu),
+          ),        
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today_outlined),
-              activeIcon: Icon(Icons.calendar_today),
-              label: 'Events'
+        drawer: NavDrawer(onTap: (ctx, i){
+          setState(() {
+            index = i;
+            Navigator.pop(ctx);
+          });
+        },),
+        body: _pages[index],
+      ),
+    );
+  }
+}
+
+class NavDrawer extends StatelessWidget {
+  final Function onTap;
+
+  NavDrawer({this.onTap});
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .8,
+      child: Drawer(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(color: Colors.black),
+              child: Padding(
+                padding: EdgeInsets.all(0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: <Widget>[
+                    Container(
+                        width: 140,
+                        height: 130,
+                        child: Image(
+                          image: AssetImage('assets/acmlogo1.png'),
+                        ))
+                  ],
+                ),
+              ),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.leaderboard_outlined),
-              activeIcon: Icon(Icons.leaderboard),
-              label: 'Leadership Board'
+            ListTile(
+              leading: Icon(Icons.calendar_today),
+              title: Text('Events'),
+              onTap: () => onTap(context, 0),
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
-              activeIcon: Icon(Icons.person),
-              label: 'Profile'
+            ListTile(
+              leading: Icon(Icons.leaderboard),
+              title: Text('Leadership Board'),
+              onTap: () => onTap(context, 1),
             ),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: Text('Account'),
+              onTap: () => onTap(context, 2),
+            )
           ],
-          currentIndex: _selectedPage,
-          onTap: _onItemTapped,
         ),
       ),
     );

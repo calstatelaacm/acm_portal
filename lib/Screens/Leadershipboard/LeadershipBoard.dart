@@ -18,7 +18,7 @@ class LeadershipBoard extends StatefulWidget {
 class _LeadershipBoardState extends State<LeadershipBoard> {
   @override
   Widget build(BuildContext context) {
-    if(UniversalPlatform.isAndroid || MediaQuery.of(context).size.width < 600){
+    if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
       return mobileDisplay();
     }
     return webDisplay();
@@ -27,46 +27,6 @@ class _LeadershipBoardState extends State<LeadershipBoard> {
   Widget mobileDisplay(){
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          //title: Text('Leadership Board'),
-          title: Image.asset('assets/acmlogo1.png', width: 100),
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          actions: [
-            FlatButton(
-                onPressed: (){
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Events()));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    Text(" Events", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            ),
-            FlatButton(
-                onPressed: null,
-                child: Row(
-                  children: [
-                    Icon(Icons.leaderboard,),
-                    Text(" Leadership Board", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            ),
-            FlatButton(
-                onPressed: (){
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Profile()));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.account_circle,),
-                    Text("Profile", style: GoogleFonts.roboto(),)
-                  ],
-                )
-            )
-          ],
-        ),
         body: retriveLeadershipBoard(),
       ),
     );
