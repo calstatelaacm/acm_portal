@@ -487,14 +487,8 @@ class _CreateAccountState extends State<CreateAccount> {
              "profile": userPhotoUrl
            })
         });
-        if(MediaQuery.of(context).size.width < 600){
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
-        }
-        else{
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
-        }
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
       }
       catch(e){
         debugPrint(e.toString());

@@ -32,52 +32,53 @@ class _EventsState extends State<Events> {
   Widget webDisplay() {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Image.asset('assets/acmlogo1.png', width: 100),
-          actions: [
-            FlatButton(
-                onPressed: null,
-                child: Row(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    Text(
-                      " Events",
-                      style: GoogleFonts.roboto(),
-                    )
-                  ],
-                )),
-            FlatButton(
-                onPressed: () {
-                  // Navigator.of(context).popUntil((route) => route.isFirst);
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
-                },
-                child: Row(
-                  children: [
-                    Icon(Icons.leaderboard,),
-                    Text(
-                      " Leadership Board",
-                      style: GoogleFonts.roboto(),
-                    )
-                  ],
-                )),
-            FlatButton(
-                onPressed: () {
-                  Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Profile()));
-                },
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.account_circle,
-                    ),
-                    Text(
-                      "Profile",
-                      style: GoogleFonts.roboto(),
-                    )
-                  ],
-                ))
-          ],
-        ),
+        // appBar: AppBar(
+        //   automaticallyImplyLeading: false,
+        //   title: Image.asset('assets/acmlogo1.png', width: 100),
+        //   actions: [
+        //     FlatButton(
+        //         onPressed: null,
+        //         child: Row(
+        //           children: [
+        //             Icon(Icons.calendar_today),
+        //             Text(
+        //               " Events",
+        //               style: GoogleFonts.roboto(),
+        //             )
+        //           ],
+        //         )),
+        //     FlatButton(
+        //         onPressed: () {
+        //           // Navigator.of(context).popUntil((route) => route.isFirst);
+        //           Navigator.of(context).push(new MaterialPageRoute(builder: (context) => LeadershipBoard()));
+        //         },
+        //         child: Row(
+        //           children: [
+        //             Icon(Icons.leaderboard,),
+        //             Text(
+        //               " Leadership Board",
+        //               style: GoogleFonts.roboto(),
+        //             )
+        //           ],
+        //         )),
+        //     FlatButton(
+        //         onPressed: () {
+        //           Navigator.of(context).push(new MaterialPageRoute(builder: (context) => Profile()));
+        //         },
+        //         child: Row(
+        //           children: [
+        //             Icon(
+        //               Icons.account_circle,
+        //             ),
+        //             Text(
+        //               "Profile",
+        //               style: GoogleFonts.roboto(),
+        //             )
+        //           ],
+        //         ))
+        //   ],
+        // ),
+        
         body: Padding(
           child: events(),
           padding: EdgeInsets.all(10.0),

@@ -65,16 +65,16 @@ class MyApp extends StatelessWidget {
         if (snapshot.hasData) {
           if (snapshot.data.providerData.length == 1) {
             // logged in using email and password
-            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
-              return Navigation();
-            }
-            return Events();
+            // if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+            //   return Navigation();
+            // }
+            return Navigation();
           } else {
             // don't remove this
-            if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
-              return Navigation();
-            }
-            return Events();
+            // if(UniversalPlatform.isWeb && MediaQuery.of(context).size.width < 600){
+            //   return Navigation();
+            // }
+            return Navigation();
           }
         } else {
           return Login();

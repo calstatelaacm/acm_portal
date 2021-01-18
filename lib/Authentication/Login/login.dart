@@ -276,15 +276,8 @@ class _LoginState extends State<Login> {
         // Toast.show("Logging you in", context, gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
         await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: pwd);
-        // Toast.show("Logging in successful", context, gravity: Toast.CENTER, duration: Toast.LENGTH_LONG);
-        if(MediaQuery.of(context).size.width < 600){
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
-        }
-        else{
-          Navigator.of(context).popUntil((route) => route.isFirst);
-          Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Events()));
-        }
+        Navigator.of(context).popUntil((route) => route.isFirst);
+        Navigator.of(context).pushReplacement(new MaterialPageRoute(builder: (context) => Navigation()));
       } catch (e) {
         debugPrint(e.toString());
       }
