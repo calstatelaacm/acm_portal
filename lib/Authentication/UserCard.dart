@@ -23,7 +23,6 @@ class _UserCardState extends State<UserCard> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     retrieveUid();
   }
@@ -80,7 +79,7 @@ class _UserCardState extends State<UserCard> {
                           color: Colors.blue
                         ),),
                     ),
-                    RaisedButton(
+                    ElevatedButton(
                       onPressed: (){},
                       child: Text("Log out"),
                     )
@@ -113,7 +112,7 @@ class _UserCardState extends State<UserCard> {
                     "Class standing: " + docSnapshot.data()['classStanding'],
                   ),
                   Text("Membership valid till end of current school year"),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: (){},
                     child: Text("Log out"),
                   )

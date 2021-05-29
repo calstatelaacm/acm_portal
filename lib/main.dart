@@ -1,13 +1,8 @@
-import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
 import 'package:acm_web/Authentication/Login/login.dart';
-import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
-import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:universal_platform/universal_platform.dart';
-
-import 'Screens/Events/Events.dart';
+import 'package:flutter/services.dart';
 import 'Screens/Navigation.dart';
 
 void main() async{
@@ -18,8 +13,14 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
+
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp
+    ]);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ACM Portal',

@@ -41,7 +41,6 @@ class _CompleteProfileState extends State<CompleteProfile> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getImage();
     getWebImage();
@@ -92,7 +91,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
               child: Image.file(profile),
             ),
             SizedBox(height: 20,),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () async{
                 setState(() {
                   isLoading = true;
@@ -128,7 +127,7 @@ class _CompleteProfileState extends State<CompleteProfile> {
               child: Image.file(profile),
             ),
             SizedBox(height: 20,),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () async{
                 setState(() {
                   isLoading = true;

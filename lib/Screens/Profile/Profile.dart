@@ -1,6 +1,4 @@
 import 'package:acm_web/Authentication/Login/login.dart';
-import 'package:acm_web/Screens/Events/Events.dart';
-import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -72,25 +70,13 @@ class _ProfileState extends State<Profile> {
                         radius: 70,
                         child: CircleAvatar(
                           backgroundColor: Colors.grey,
-                          backgroundImage:
-                              NetworkImage(snapshot.data.data()['profile']),
-                          //An optional error callback for errors emitted when loading backgroundImage
-                          onBackgroundImageError: (exception, stackTrace) {
-                            print(
-                                'flutter: ══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════\nflutter: The following ArgumentError was thrown resolving an image codec:\nflutter: Invalid argument(s): No host specified in URI file:///profile');
-                          },
+                          child: Icon(Icons.person, size: 50,),
                           radius: 60,
                         ),
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 30,
                       ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ), //openSans
                       Text(
                         snapshot.data.data()['name'],
                         style: GoogleFonts.montserrat(
@@ -153,7 +139,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       SizedBox(
                           height: 30,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               _signOut();
                             },
@@ -194,25 +180,13 @@ class _ProfileState extends State<Profile> {
                         radius: 70,
                         child: CircleAvatar(
                           backgroundColor: Colors.grey,
-                          backgroundImage:
-                              NetworkImage(snapshot.data.data()['profile']),
-                          //An optional error callback for errors emitted when loading backgroundImage
-                          onBackgroundImageError: (exception, stackTrace) {
-                            print(
-                                'flutter: ══╡ EXCEPTION CAUGHT BY IMAGE RESOURCE SERVICE ╞════════════════════════════════════════════════════\nflutter: The following ArgumentError was thrown resolving an image codec:\nflutter: Invalid argument(s): No host specified in URI file:///profile');
-                          },
+                          child: Icon(Icons.person, size: 50,),
                           radius: 60,
                         ),
                       ),
                       SizedBox(
-                        height: 60,
+                        height: 30,
                       ),
-                      Divider(
-                        color: Colors.white,
-                      ),
-                      SizedBox(
-                        height: 60,
-                      ), //openSans
                       Text(
                         snapshot.data.data()['name'],
                         style: GoogleFonts.montserrat(
@@ -247,6 +221,7 @@ class _ProfileState extends State<Profile> {
                         height: 30,
                       ),
                       SizedBox(
+                        width: 300,
                           child: snapshot.data.data()['membership']
                               ? Text(
                                   "Membership: Active",
@@ -275,7 +250,7 @@ class _ProfileState extends State<Profile> {
                       ),
                       SizedBox(
                           height: 30,
-                          child: RaisedButton(
+                          child: ElevatedButton(
                             onPressed: () {
                               _signOut();
                             },

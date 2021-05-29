@@ -1,5 +1,4 @@
 import 'package:acm_web/Authentication/CreateAccount/CreateAccount.dart';
-import 'package:acm_web/Screens/Events/Events.dart';
 import 'package:acm_web/Screens/Navigation.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +120,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  RaisedButton(
+                  ElevatedButton(
                     onPressed: (){
                       setState(() {
                         isLoading = true;
@@ -236,7 +235,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  RaisedButton(
+                  ElevatedButton(
                 onPressed: (){
                   setState(() {
                     isLoading = true;

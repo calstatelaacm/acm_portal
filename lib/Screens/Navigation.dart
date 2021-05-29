@@ -55,7 +55,7 @@ class _NavigationState extends State<Navigation> {
           automaticallyImplyLeading: false,
           title: Image.asset('assets/acmlogo1.png', width: 100,),
           actions: [
-            FlatButton(
+            TextButton(
               onPressed: (){
                 setState(() {
                   index = 0;
@@ -71,7 +71,7 @@ class _NavigationState extends State<Navigation> {
                 ],
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: (){
                 setState(() {
                   index = 1;
@@ -87,7 +87,7 @@ class _NavigationState extends State<Navigation> {
                 ],
               ),
             ),
-            FlatButton(
+            TextButton(
               onPressed: (){
                 setState(() {
                   index = 2;

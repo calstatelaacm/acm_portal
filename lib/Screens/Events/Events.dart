@@ -1,8 +1,5 @@
-import 'package:acm_web/Screens/Leadershipboard/LeadershipBoard.dart';
-import 'package:acm_web/Screens/Profile/Profile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:universal_platform/universal_platform.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -109,7 +106,7 @@ class _EventsState extends State<Events> {
             return ListView(
               shrinkWrap: true,
               children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
+                  snapshot.data.docs.map((DocumentSnapshot document) {
                 return ListTile(
                   onTap: () {
                     if (canLaunch(document['url']) != null) {
@@ -141,7 +138,7 @@ class _EventsState extends State<Events> {
               crossAxisCount: 3,
               childAspectRatio: 4 / 2,
               children:
-                  snapshot.data.documents.map((DocumentSnapshot document) {
+                  snapshot.data.docs.map((DocumentSnapshot document) {
                 return GestureDetector(
                   onTap: () {},
                   child: Card(
@@ -164,7 +161,7 @@ class _EventsState extends State<Events> {
                                                 height: 150,
                                                 width: 100,
                                               ),
-                                              FlatButton(
+                                              TextButton(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
                                                   },
@@ -208,7 +205,7 @@ class _EventsState extends State<Events> {
                                   // softWrap: true,
                                 ),
                                 //RSVP BUTTON
-                                RaisedButton(
+                                ElevatedButton(
                                   onPressed: () {
                                     if (canLaunch(document['url']) != null) {
                                       launch(document['url']);
