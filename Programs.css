@@ -1,0 +1,149 @@
+.quote-style-1 {
+    height: 30vh;
+    width: 100%;
+    z-index: 2;
+    font-size: 2.5rem;
+    color: white;
+    font-weight: bold;
+    line-height: 1;
+    text-align: left;
+    padding-top: 16vh;
+    /* display: grid; */
+    grid-template-rows: 1fr 1.4fr;
+    padding-left: 2rem;
+    
+}
+
+.programs-card {
+    margin: auto;
+    text-align: left;
+    color: white;
+    padding-left: 20px;
+    padding-top: 30px;
+}
+
+.programs-nav-link {
+    color: white;
+}
+
+.programs-nav-link-tab {
+    outline: 1px solid white;
+}
+
+.disclaimer-body {
+    padding-left: 20px;
+    text-align: left;
+}
+
+.disclaimer_header{
+    font-size: 30px;
+    text-align: center;
+    color: red;
+    padding-top: 10px;
+}
+
+.quote-bg {
+    /* When the height is less than 70vh, the beginner and advanced tabs are not be clickable */
+    height: 80vh;
+    background:
+    linear-gradient(
+    rgba(0, 0, 0, 0.55),
+    rgba(0, 0, 0, 0.55)),
+    url('pictures/programs-background.jpg');
+    background-blend-mode: darken;
+    background-size: cover !important;
+    align-self: center;
+    font-size: 4.4rem;
+    color: white;
+    opacity: .95;
+    font-weight: bold;
+    grid-row: 1/2;
+    grid-column: 2/3;
+}
+
+.programs-tab-content {
+    width: 70vw
+}
+
+.programs-images {
+    min-width: 3in;
+    max-width: 30vw;
+    margin: 5px;
+}
+
+.programs-poster {
+    min-width: 300px;
+    max-width: 30vw;
+    padding: 10px;
+}
+
+.programs-body {
+    color: white;
+}
+
+.program-description-header{
+    font-size: 20px;
+    color: #029CD7;
+}
+
+.program-description{
+    font-size: 20px;
+    margin-top: -64px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mentorship-body {
+    padding-top: 10vh;
+    padding-left: 10vw;
+    padding-bottom: 8vh;
+    padding-right: 10vw;
+    text-align: left;
+}
+
+.disclaimer {
+    font-size: 20px;
+}
+
+.anchor-blue {
+    color: #029CD7 !important;
+}
+
+.mentorship-images {
+    float: right;
+    min-width: 1.75in;
+    max-width: 20vw;
+    margin: 15px;
+}
+
+iframe[src*=youtube] {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+    .quote-style-1 {
+        padding-top: 30px;
+    }
+    .programs-body {
+        padding-top: 75px;
+    }
+    .disclaimer-body {
+        padding-right: 5px;
+    }
+    .flex-column {
+        padding-bottom: 35px;
+    }
+    .programs-poster {
+        /* min-width can be used to change poster size on mobile view */
+        min-width: 90vw;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+    .programs-tab-label {
+        font-size: 0.85rem;
+    }
+    iframe[src*=youtube] {
+        min-width: 90vw;
+    }
+  }
